@@ -1,0 +1,44 @@
+public class Ochered {
+    private int[] hranilische;
+    private int razmer;
+    private int golova;
+    private int hvost;
+    private int kolichestvo;
+
+    public Ochered(int razmer) {
+        this.razmer = razmer;
+        this.hranilische = new int[razmer];
+        this.golova = 0;
+        this.hvost = -1;
+        this.kolichestvo = 0;
+    }
+
+    public void dobavit(int znachenie) {
+        if (kolichestvo < razmer) {
+            hvost = (hvost + 1) % razmer;
+            hranilische[hvost] = znachenie;
+            kolichestvo++;
+        }
+    }
+
+    public int udalit() {
+        if (kolichestvo > 0) {
+            int znachenie = hranilische[golova];
+            golova = (golova + 1) % razmer;
+            kolichestvo--;
+            return znachenie;
+        }
+        return -1;
+    }
+
+    public int posmotretPerviy() {
+        if (kolichestvo > 0) {
+            return hranilische[golova];
+        }
+        return -1;
+    }
+
+    public boolean pustoy() {
+        return kolichestvo == 0;
+    }
+}
