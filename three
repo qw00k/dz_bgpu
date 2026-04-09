@@ -1,0 +1,52 @@
+public class BinarnoeDerevo {
+    private class Uzel {
+        int znachenie;
+        Uzel levyy;
+        Uzel pravvyy;
+
+        Uzel(int znachenie) {
+            this.znachenie = znachenie;
+            this.levyy = null;
+            this.pravvyy = null;
+        }
+    }
+
+    private Uzel koren;
+
+    public BinarnoeDerevo() {
+        this.koren = null;
+    }
+
+    public void dobavit(int znachenie) {
+        koren = dobavitRezult(koren, znachenie);
+    }
+
+    private Uzel dobavitRezult(Uzel uzel, int znachenie) {
+        if (uzel == null) {
+            return new Uzel(znachenie);
+        }
+        if (znachenie < uzel.znachenie) {
+            uzel.levyy = dobavitRezult(uzel.levyy, znachenie);
+        } else if (znachenie > uzel.znachenie) {
+            uzel.pravvyy = dobavitRezult(uzel.pravvyy, znachenie);
+        }
+        return uzel;
+    }
+
+    public boolean poisk(int znachenie) {
+        return poiskRezult(koren, znachenie);
+    }
+
+    private boolean poiskRezult(Uzel uzel, int znachenie) {
+        if (uzel == null) {
+            return false;
+        }
+        if (znachenie == uzel.znachenie) {
+            return true;
+        } else if (znachenie < uzel.znachenie) {
+            return poiskRezult(uzel.levyy, znachenie);
+        } else {
+            return poiskRezult(uzel.pravvyy, znachenie);
+        }
+    }
+}
