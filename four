@@ -1,0 +1,66 @@
+import java.util.ArrayList;
+import java.util.List;
+
+public class DerevoSObhodom {
+    private class Uzel {
+        int znachenie;
+        Uzel levyy;
+        Uzel pravvyy;
+
+        Uzel(int znachenie) {
+            this.znachenie = znachenie;
+            this.levyy = null;
+            this.pravvyy = null;
+        }
+    }
+
+    private Uzel koren;
+
+    public DerevoSObhodom() {
+        this.koren = null;
+    }
+
+    public void vstavit(int znachenie) {
+        koren = vstavitRezult(koren, znachenie);
+    }
+
+    private Uzel vstavitRezult(Uzel uzel, int znachenie) {
+        if (uzel == null) {
+            return new Uzel(znachenie);
+        }
+        if (znachenie < uzel.znachenie) {
+            uzel.levyy = vstavitRezult(uzel.levyy, znachenie);
+        } else {
+            uzel.pravvyy = vstavitRezult(uzel.pravvyy, znachenie);
+        }
+        return uzel;
+    }
+
+    public List<Integer> obhodVPoryadke() {
+        List<Integer> rezultat = new ArrayList<>();
+        obhodVPoryadkeRezult(koren, rezultat);
+        return rezultat;
+    }
+
+    private void obhodVPoryadkeRezult(Uzel uzel, List<Integer> rezultat) {
+        if (uzel != null) {
+            obhodVPoryadkeRezult(uzel.levyy, rezultat);
+            rezultat.add(uzel.znachenie);
+            obhodVPoryadkeRezult(uzel.pravvyy, rezultat);
+        }
+    }
+
+    public List<Integer> obhodVPryamom() {
+        List<Integer> rezultat = new ArrayList<>();
+        obhodVPryamomRezult(koren, rezultat);
+        return rezultat;
+    }
+
+    private void obhodVPryamomRezult(Uzel uzel, List<Integer> rezultat) {
+        if (uzel != null) {
+            rezultat.add(uzel.znachenie);
+            obhodVPryamomRezult(uzel.levyy, rezultat);
+            obhodVPryamomRezult(uzel.pravvyy, rezultat);
+        }
+    }
+}
