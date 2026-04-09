@@ -1,0 +1,57 @@
+public class Mnozhestvo {
+    private int[] hranilische;
+    private int razmer;
+    private int kolichestvo;
+
+    public Mnozhestvo(int razmer) {
+        this.razmer = razmer;
+        this.hranilische = new int[razmer];
+        this.kolichestvo = 0;
+    }
+
+    public void dobavit(int znachenie) {
+        if (!soderzhit(znachenie) && kolichestvo < razmer) {
+            hranilische[kolichestvo] = znachenie;
+            kolichestvo++;
+        }
+    }
+
+    public void udalit(int znachenie) {
+        for (int i = 0; i < kolichestvo; i++) {
+            if (hranilische[i] == znachenie) {
+                hranilische[i] = hranilische[kolichestvo - 1];
+                kolichestvo--;
+                break;
+            }
+        }
+    }
+
+    public boolean soderzhit(int znachenie) {
+        for (int i = 0; i < kolichestvo; i++) {
+            if (hranilische[i] == znachenie) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public int[] poluchitVse() {
+        int[] kopiya = new int[kolichestvo];
+        for (int i = 0; i < kolichestvo; i++) {
+            kopiya[i] = hranilische[i];
+        }
+        return kopiya;
+    }
+
+    public Mnozhestvo obedinenie(Mnozhestvo drugoe) {
+        Mnozhestvo rezultat = new Mnozhestvo(this.razmer + drugoe.razmer);
+        for (int i = 0; i < this.kolichestvo; i++) {
+            rezultat.dobavit(this.hranilische[i]);
+        }
+        int[] drugieElementy = drugoe.poluchitVse();
+        for (int i = 0; i < drugieElementy.length; i++) {
+            rezultat.dobavit(drugieElementy[i]);
+        }
+        return rezultat;
+    }
+}
