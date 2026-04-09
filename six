@@ -1,0 +1,76 @@
+public class SortirovkaMassiva {
+    
+    public static void sortirovkaPuzyrkom(int[] massiv) {
+        int n = massiv.length;
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - i - 1; j++) {
+                if (massiv[j] > massiv[j + 1]) {
+                    int vremennoe = massiv[j];
+                    massiv[j] = massiv[j + 1];
+                    massiv[j + 1] = vremennoe;
+                }
+            }
+        }
+    }
+    
+    public static void sortirovkaVstavkami(int[] massiv) {
+        int n = massiv.length;
+        for (int i = 1; i < n; i++) {
+            int klyuch = massiv[i];
+            int j = i - 1;
+            while (j >= 0 && massiv[j] > klyuch) {
+                massiv[j + 1] = massiv[j];
+                j = j - 1;
+            }
+            massiv[j + 1] = klyuch;
+        }
+    }
+    
+    public static int[] skopirovatMassiv(int[] original) {
+        int[] kopiya = new int[original.length];
+        for (int i = 0; i < original.length; i++) {
+            kopiya[i] = original[i];
+        }
+        return kopiya;
+    }
+    
+    public static void main(String[] args) {
+        int[] malenkiyMassiv = {64, 34, 25, 12, 22, 11, 90, 5, 77, 33};
+        int[] bolshoyMassiv = new int[10000];
+        for (int i = 0; i < bolshoyMassiv.length; i++) {
+            bolshoyMassiv[i] = (int)(Math.random() * 10000);
+        }
+        
+        int[] malenkiyDlyaPuzyrka = skopirovatMassiv(malenkiyMassiv);
+        long nachaloPuzyrekMal = System.nanoTime();
+        sortirovkaPuzyrkom(malenkiyDlyaPuzyrka);
+        long konecPuzyrekMal = System.nanoTime();
+        long vremyaPuzyrekMal = konecPuzyrekMal - nachaloPuzyrekMal;
+        
+        int[] malenkiyDlyaVstavok = skopirovatMassiv(malenkiyMassiv);
+        long nachaloVstavkiMal = System.nanoTime();
+        sortirovkaVstavkami(malenkiyDlyaVstavok);
+        long konecVstavkiMal = System.nanoTime();
+        long vremyaVstavkiMal = konecVstavkiMal - nachaloVstavkiMal;
+        
+        int[] bolshoyDlyaPuzyrka = skopirovatMassiv(bolshoyMassiv);
+        long nachaloPuzyrekBol = System.nanoTime();
+        sortirovkaPuzyrkom(bolshoyDlyaPuzyrka);
+        long konecPuzyrekBol = System.nanoTime();
+        long vremyaPuzyrekBol = konecPuzyrekBol - nachaloPuzyrekBol;
+        
+        int[] bolshoyDlyaVstavok = skopirovatMassiv(bolshoyMassiv);
+        long nachaloVstavkiBol = System.nanoTime();
+        sortirovkaVstavkami(bolshoyDlyaVstavok);
+        long konecVstavkiBol = System.nanoTime();
+        long vremyaVstavkiBol = konecVstavkiBol - nachaloVstavkiBol;
+        
+        System.out.println("маленький массив (10 элементов):");
+        System.out.println("пузырек: " + vremyaPuzyrekMal + " нс");
+        System.out.println("вставками: " + vremyaVstavkiMal + " нс");
+        System.out.println("");
+        System.out.println("большой массив (10000 элементов):");
+        System.out.println("пузырек: " + vremyaPuzyrekBol + " нс");
+        System.out.println("вставками: " + vremyaVstavkiBol + " нс");
+    }
+}
