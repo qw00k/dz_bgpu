@@ -1,0 +1,40 @@
+import java.util.Arrays;
+
+public class Stek {
+    private int[] hranilische;
+    private int razmer;
+    private int verhniyIndex;
+
+    public Stek(int razmer) {
+        this.razmer = razmer;
+        this.hranilische = new int[razmer];
+        this.verhniyIndex = -1;
+    }
+
+    public void dobavit(int znachenie) {
+        if (verhniyIndex < razmer - 1) {
+            verhniyIndex++;
+            hranilische[verhniyIndex] = znachenie;
+        }
+    }
+
+    public int udalit() {
+        if (verhniyIndex >= 0) {
+            int znachenie = hranilische[verhniyIndex];
+            verhniyIndex--;
+            return znachenie;
+        }
+        return -1;
+    }
+
+    public int posmotretVerh() {
+        if (verhniyIndex >= 0) {
+            return hranilische[verhniyIndex];
+        }
+        return -1;
+    }
+
+    public boolean pustoy() {
+        return verhniyIndex == -1;
+    }
+}
